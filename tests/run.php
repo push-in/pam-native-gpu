@@ -1,0 +1,4 @@
+<?php
+declare(strict_types=1);
+use Pam\Native\Gpu\GpuEventKind;use Pam\Native\Gpu\GpuProgram;use Pam\Native\Gpu\GpuRenderMode;use Pam\Native\Gpu\GpuView;use Pam\Native\UI\CustomView;
+require dirname(__DIR__).'/vendor/autoload.php';function expect(bool$c,string$m):void{if(!$c)throw new RuntimeException($m);}expect(array_column(GpuRenderMode::cases(),'value')===range(1,2),'Render modes changed.');expect(array_column(GpuEventKind::cases(),'value')===range(1,3),'Events changed.');$program=new GpuProgram("#version 300 es\nprecision highp float;out vec4 outColor;void main(){outColor=vec4(1.0);}",'fragment float4 pam_fragment(float2 resolution,float time,float2 uv){return float4(1);}', ['intensity'=>.8]);expect(GpuView::make($program)->toElement()::class===CustomView::class,'GPU view is not native.');try{new GpuProgram('', 'x');throw new RuntimeException('Empty shader accepted.');}catch(InvalidArgumentException){}echo "PAM Native GPU contracts passed.\n";
