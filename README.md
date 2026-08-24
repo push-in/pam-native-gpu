@@ -1,16 +1,54 @@
+<!-- pam:product-page:start -->
+<div align="center">
+
 # PAM Native GPU
 
-## Start here
+**Own the pixels when ordinary components are not enough.**
+
+Host native GPU surfaces and compiled shaders while command submission stays outside the PHP event loop.
+
+[![Latest version](https://img.shields.io/packagist/v/pushinbr/pam-native-gpu?style=flat-square&label=stable)](https://packagist.org/packages/pushinbr/pam-native-gpu)
+[![CI](https://img.shields.io/github/actions/workflow/status/push-in/pam-native-gpu/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/push-in/pam-native-gpu/actions)
+![PHP](https://img.shields.io/badge/PHP-8.5-777BB4?style=flat-square&logo=php&logoColor=white)
+![Android](https://img.shields.io/badge/Android-API%2026%2B-3DDC84?style=flat-square&logo=android&logoColor=white)
+![iOS](https://img.shields.io/badge/iOS-15%2B-000000?style=flat-square&logo=apple&logoColor=white)
+
+**[Documentation](https://push-in.github.io/pam-docs/native/overview/) · [Quick start](#quick-start) · [What you can build](#what-you-can-build) · [PAM ecosystem](https://push-in.github.io/pam-docs/ecosystem/) · [Issues](https://github.com/push-in/pam-native-gpu/issues)**
+
+</div>
+
+---
+
+## Why PAM Native GPU
+
+Host native GPU surfaces and compiled shaders while command submission stays outside the PHP event loop. The public API is strictly typed for PHP 8.5; expensive or frame-sensitive work stays in Rust or the platform SDK instead of crossing the application boundary every frame.
+
+| | |
+| --- | --- |
+| **Best for** | A focused capability you can add to any PAM Native application |
+| **Native path** | OpenGL ES · Metal |
+| **Application model** | Composer package + generated native integration |
+| **Design rule** | Independent module; no feed, vertical, or application template bundled |
+
+## What you can build
+
+- Realtime visual effects and shader-driven UI
+- Scientific and high-volume data visualization
+- Custom renderers and GPU-accelerated creative tools
+
+## Quick start
+
+Already have a PAM Native project? Add only this capability:
 
 ```bash
-curl --proto '=https' --proto-redir '=https' --tlsv1.2 \
-    --connect-timeout 15 --max-time 60 --max-filesize 1048576 -fsSL \
-    https://github.com/push-in/pam/releases/latest/download/install.sh | sh
-pam init my-app --template native
-cd my-app
 pam composer require pushinbr/pam-native-gpu
 pam doctor --fix
 ```
+
+New to PAM? Follow the **[five-minute PAM Native setup](https://push-in.github.io/pam-docs/native/overview/)** once, then return here. Your application stays a normal Composer project with a committed lockfile.
+<!-- pam:product-page:end -->
+
+## See it in action
 
 This package provides a horizontal GPU surface, not a canvas, 3D engine, game framework, or app
 template. OpenGL ES 3 executes on Android and Metal executes on iOS. PHP supplies immutable shader
