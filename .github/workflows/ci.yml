@@ -12,13 +12,23 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
+      - uses: actions/checkout@v7
+        with:
+          repository: push-in/pam-native-plugin-kit
+          ref: 35452deb370012ee03a4eb8c395cc38531737c9d
+          path: pam-native-plugin-kit
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.5'
           tools: composer:v2
           coverage: none
       - run: composer validate --strict --no-check-lock
-      - run: composer update --prefer-dist --no-interaction --no-progress
+      - name: Resolve the candidate Plugin Kit contract
+        run: |
+          composer config repositories.pam-native-plugin-kit-candidate \
+            '{"type":"path","url":"pam-native-plugin-kit","options":{"symlink":false,"versions":{"pushinbr/pam-native-plugin-kit":"0.2.1"}}}'
+          composer update --prefer-dist --no-interaction --no-progress --dry-run
+          composer update --prefer-dist --no-interaction --no-progress
       - run: php -d auto_prepend_file=vendor/autoload.php tests/run.php
       - run: vendor/bin/phpstan analyse --no-progress
       - run: |
