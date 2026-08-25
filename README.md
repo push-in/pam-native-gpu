@@ -46,6 +46,17 @@ Shader sources are capped at 64 KiB and uniforms at 64 finite scalars. Uniforms 
 in lexicographically sorted name order. Platform support: Android API 26+, iOS 15+, PHP 8.5+, and
 PAM Native 0.8.x.
 
+The render path is allocation-stable after a program revision: Android parses
+uniform JSON and resolves every OpenGL location during configuration, while iOS
+sorts/ packs uniforms once and reuses one Metal command queue. Neither platform
+parses JSON, sorts maps, looks up shader locations, creates a command queue, or
+re-enters PHP inside `draw`. Shader/program resources are released after both
+successful and failed compilation, and diagnostic payloads are bounded.
+
+This package depends only on PAM Native's public module and binary-wire
+capabilities. PAM Native UI, 3D, media, sync, and backend packages remain fully
+optional and independent.
+
 - [PAM introduction](https://push-in.github.io/pam-docs/introduction/)
 - [PAM Native overview](https://push-in.github.io/pam-docs/native/overview/)
 - [Report an issue](https://github.com/push-in/pam-native-gpu/issues)
